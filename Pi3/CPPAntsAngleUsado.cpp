@@ -15,7 +15,7 @@ static double const Pi =  3.1415926535;
 double PheromoneProfile(double x)
 {
     
-    double aux = 10.*exp(-abs(10. * x));
+    double aux = 1.*exp(-abs(20. * x));
     
     return 1.*aux;
 }
@@ -34,7 +34,7 @@ double PheromoneProfile(double x)
 int main (void){
     
     double ell = 0.5;     //  Sensing radius
-    double beta = Pi/4.;    //  Sensing half-angle
+    double beta = Pi/3.;    //  Sensing half-angle
     
     double dt;
     

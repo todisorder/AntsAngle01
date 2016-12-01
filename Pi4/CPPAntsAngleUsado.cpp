@@ -15,9 +15,9 @@ static double const Pi =  3.1415926535;
 double PheromoneProfile(double x)
 {
     
-    double aux = 1.*exp(-abs(1. * x));
+    double aux = 1.*exp(-abs(20. * x));
     
-    return aux;
+    return 1.*aux;
 }
 
 /////////////////////////////////////////
@@ -33,14 +33,14 @@ double PheromoneProfile(double x)
 
 int main (void){
     
-    double ell = 0.05;     //  Sensing radius
+    double ell = 0.5;     //  Sensing radius
     double beta = Pi/4.;    //  Sensing half-angle
     
     double dt;
     
-    int discr;       //  Number of r points for circular sector
-    int disctheta;   //  Number of theta points for circular sector
-    double Ftheta;
+    int discr = 10.;       //  Number of r points for circular sector
+    int disctheta = 10.;   //  Number of theta points for circular sector
+    double Ftheta = 0.;
     
     double Tfinal;
     
@@ -81,8 +81,14 @@ int main (void){
     double X2aux = X2;
     double Thetaaux = Theta;
     
+    ofstream AntPos("AntPos.txt");
+    AntPos << Tcurrent << "\t" << X1 << "\t" << X2 << "\t" << Theta << "\t" << endl;
+    
+    
+    //  Main Loop
     for (int iter=1; iter <= tt; iter++) {
         
+        Tcurrent = Tcurrent + dt;
         
         X1 = X1aux + dt * cos(Thetaaux);
         X2 = X2aux + dt * sin(Thetaaux);
@@ -95,13 +101,15 @@ int main (void){
             }
         }
         
+//        cout << Ftheta << endl;
         Theta = Thetaaux + dt * Ftheta;
+        Ftheta = 0.;
         
         
         X1aux = X1;
         X2aux = X2;
         Thetaaux = Theta;
-        
+        AntPos << Tcurrent << "\t" << X1 << "\t" << X2 << "\t" << Theta << "\t" << endl;
     }
     
     
